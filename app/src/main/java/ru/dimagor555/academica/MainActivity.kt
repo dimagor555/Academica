@@ -9,7 +9,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowCompat
 import ru.dimagor555.academica.login.AuthRepo
 import ru.dimagor555.academica.navigation.GlobalNavState
-import ru.dimagor555.academica.navigation.UniversityOverviewConfig
+import ru.dimagor555.academica.navigation.MainConfig
 import ru.dimagor555.academica.ui.theme.AcademicaTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val authRepo = AuthRepo(LocalContext.current)
             if (authRepo.isAuthorized) {
-                GlobalNavState.clearAndPush(UniversityOverviewConfig)
+                GlobalNavState.clearAndPush(MainConfig)
             }
             AcademicaTheme(useDarkTheme = true) {
                 val stack by GlobalNavState.stack.collectAsState()

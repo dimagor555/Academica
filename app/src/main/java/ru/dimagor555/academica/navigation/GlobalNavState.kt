@@ -7,6 +7,7 @@ import ru.dimagor555.academica.credit.CreditOfferOverviewScreen
 import ru.dimagor555.academica.login.LoginScreen
 import ru.dimagor555.academica.login.OtpCodeScreen
 import ru.dimagor555.academica.login.RegistrationScreen
+import ru.dimagor555.academica.main.MainScreen
 import ru.dimagor555.academica.university.University
 import ru.dimagor555.academica.university.UniversityDetailsScreen
 import ru.dimagor555.academica.university.UniversityOverviewScreen
@@ -38,6 +39,14 @@ sealed interface Config {
 
     @Composable
     fun ScreenUI()
+}
+
+object MainConfig : Config {
+
+    @Composable
+    override fun ScreenUI() {
+        MainScreen()
+    }
 }
 
 object LoginConfig : Config {

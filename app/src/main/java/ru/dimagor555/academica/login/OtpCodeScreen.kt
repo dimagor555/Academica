@@ -25,8 +25,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import ru.dimagor555.academica.navigation.GlobalNavState
+import ru.dimagor555.academica.navigation.MainConfig
 import ru.dimagor555.academica.navigation.RegistrationConfig
-import ru.dimagor555.academica.navigation.UniversityOverviewConfig
 import ru.dimagor555.academica.net.client
 import ru.dimagor555.academica.ui.theme.AcademicaTheme
 import ru.tinkoff.decoro.MaskImpl
@@ -145,7 +145,7 @@ private fun tryGoNext(phone: String, context: Context) {
         if (userDto == null) {
             GlobalNavState.push(RegistrationConfig(phone = phone))
         } else {
-            GlobalNavState.clearAndPush(UniversityOverviewConfig)
+            GlobalNavState.clearAndPush(MainConfig)
         }
     }
 }

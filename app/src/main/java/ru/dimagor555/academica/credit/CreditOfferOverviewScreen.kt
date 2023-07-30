@@ -50,7 +50,7 @@ fun CreditOfferOverviewScreen() {
             LazyColumn {
                 items(
                     items = bankOffers,
-                    key = { it.name },
+                    key = { it.bankName },
                 ) { bank ->
                     Card(
                         modifier = Modifier.padding(vertical = 8.dp),
@@ -70,7 +70,7 @@ fun CreditOfferOverviewScreen() {
                                 it.transform(RoundedCorners(25))
                             }
                             Text(
-                                text = bank.name,
+                                text = bank.bankName,
                                 style = MaterialTheme.typography.headlineMedium,
                             )
                         }
@@ -116,7 +116,8 @@ fun CreditOfferOverviewScreen() {
 }
 
 private data class BankOffer(
-    val name: String,
+    val bankName: String,
+    val creditName: String,
     val interest: Float,
     val iconUrl: String,
     val maxAmountInRubles: Int,
@@ -130,6 +131,7 @@ private suspend fun loadBankOffers(): List<BankOffer> {
 
 @Serializable
 private data class BankOfferDto(
+    val name: String,
     val bank: String,
     val logo: String,
     val maxAmount: Int,
@@ -138,7 +140,8 @@ private data class BankOfferDto(
 )
 
 private fun BankOfferDto.toBankOffer() = BankOffer(
-    name = bank,
+    bankName = bank,
+    creditName = name,
     interest = interestRate,
     iconUrl = logo,
     maxAmountInRubles = maxAmount,
