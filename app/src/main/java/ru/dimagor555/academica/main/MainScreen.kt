@@ -29,7 +29,7 @@ fun MainScreen() {
                 .fillMaxSize()
                 .statusBarsPadding()
                 .padding(horizontal = 24.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
@@ -38,7 +38,7 @@ fun MainScreen() {
             )
             Column(
                 modifier = Modifier
-                    .padding(top = 16.dp, bottom = 32.dp)
+                    .padding(top = 8.dp, bottom = 32.dp)
                     .verticalScroll(rememberScrollState()),
             ) {
                 ServiceCard(

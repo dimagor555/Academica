@@ -3,10 +3,7 @@ package ru.dimagor555.academica.university
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,8 +11,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ru.dimagor555.academica.navigation.AppliedCreditOffersConfig
+import ru.dimagor555.academica.navigation.GlobalNavState
 import ru.dimagor555.academica.ui.theme.AcademicaTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UniversityDetailsScreen(university: University) {
     Surface(
@@ -39,8 +39,10 @@ fun UniversityDetailsScreen(university: University) {
                 items(
                     items = university.faculties,
                 ) { faculty ->
+                    val cost = faculty.cost.toInt()
                     Card(
                         modifier = Modifier.padding(vertical = 8.dp),
+                        onClick = { GlobalNavState.push(AppliedCreditOffersConfig(cost)) },
                     ) {
                         Column(
                             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
@@ -54,10 +56,8 @@ fun UniversityDetailsScreen(university: University) {
                                     text = faculty.name,
                                     fontWeight = FontWeight.Bold,
                                 )
-                                val cost = faculty.cost.toInt()
-                                val costThousands = cost / 1000
                                 Text(
-                                    text = "₽$costThousands тыс.",
+                                    text = cost.mapToThousandsRubles(),
                                     color = MaterialTheme.colorScheme.primary,
                                 )
                             }
@@ -71,6 +71,11 @@ fun UniversityDetailsScreen(university: University) {
             }
         }
     }
+}
+
+fun Int.mapToThousandsRubles(): String {
+    val costThousands = this / 1000
+    return "₽$costThousands тыс."
 }
 
 @Preview

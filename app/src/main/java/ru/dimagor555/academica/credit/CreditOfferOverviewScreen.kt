@@ -115,7 +115,7 @@ fun CreditOfferOverviewScreen() {
     }
 }
 
-private data class BankOffer(
+data class BankOffer(
     val bankName: String,
     val creditName: String,
     val interest: Float,
@@ -124,13 +124,13 @@ private data class BankOffer(
     val maxTernInMonths: Int,
 )
 
-private suspend fun loadBankOffers(): List<BankOffer> {
+suspend fun loadBankOffers(): List<BankOffer> {
     val dtos = runCatching { client.get("bank/credits").body<List<BankOfferDto>>() }.getOrElse { emptyList() }
     return dtos.map { it.toBankOffer() }
 }
 
 @Serializable
-private data class BankOfferDto(
+data class BankOfferDto(
     val name: String,
     val bank: String,
     val logo: String,
@@ -139,7 +139,7 @@ private data class BankOfferDto(
     val interestRate: Float,
 )
 
-private fun BankOfferDto.toBankOffer() = BankOffer(
+fun BankOfferDto.toBankOffer() = BankOffer(
     bankName = bank,
     creditName = name,
     interest = interestRate,

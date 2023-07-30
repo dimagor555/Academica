@@ -3,6 +3,7 @@ package ru.dimagor555.academica.navigation
 import androidx.compose.runtime.Composable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import ru.dimagor555.academica.credit.AppliedCreditOffersScreen
 import ru.dimagor555.academica.credit.CreditOfferOverviewScreen
 import ru.dimagor555.academica.login.LoginScreen
 import ru.dimagor555.academica.login.OtpCodeScreen
@@ -100,5 +101,15 @@ data class UniversityDetailsConfig(
     @Composable
     override fun ScreenUI() {
         UniversityDetailsScreen(university = university)
+    }
+}
+
+data class AppliedCreditOffersConfig(
+    val requiredAmountInRubles: Int,
+) : Config {
+
+    @Composable
+    override fun ScreenUI() {
+        AppliedCreditOffersScreen(requiredAmountInRubles = requiredAmountInRubles)
     }
 }
