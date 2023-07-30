@@ -14,11 +14,12 @@ val client = HttpClient(CIO) {
         level = LogLevel.ALL
     }
     install(DefaultRequest) {
-        url("http://10.0.2.2:8080/")
+        url("http://10.1.0.20:8080/")
     }
     install(ContentNegotiation) {
         json(Json {
             isLenient = true
+            ignoreUnknownKeys = true
         })
     }
 }

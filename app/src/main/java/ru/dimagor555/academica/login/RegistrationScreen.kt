@@ -49,7 +49,7 @@ fun RegistrationScreen() {
                 Field(name = "Дата рождения"),
                 Field(name = "Серия и номер паспорта"),
                 Field(name = "Кем выдан"),
-                Field(name = "Даты выдачи"),
+                Field(name = "Дата выдачи"),
                 Field(name = "Код подразделения"),
                 Field(name = "Email", isRequired = false),
             )

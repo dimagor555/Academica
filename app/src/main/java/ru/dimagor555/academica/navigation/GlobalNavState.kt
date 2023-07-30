@@ -3,9 +3,13 @@ package ru.dimagor555.academica.navigation
 import androidx.compose.runtime.Composable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import ru.dimagor555.academica.credit.CreditOfferOverviewScreen
 import ru.dimagor555.academica.login.LoginScreen
 import ru.dimagor555.academica.login.OtpCodeScreen
 import ru.dimagor555.academica.login.RegistrationScreen
+import ru.dimagor555.academica.university.University
+import ru.dimagor555.academica.university.UniversityDetailsScreen
+import ru.dimagor555.academica.university.UniversityOverviewScreen
 
 object GlobalNavState {
 
@@ -13,6 +17,20 @@ object GlobalNavState {
 
     fun push(config: Config) {
         stack.update { it + config }
+    }
+
+    fun clearAndPush(config: Config) {
+        stack.value = listOf(config)
+    }
+
+    fun pop(): Boolean {
+        if (stack.value.size <= 1) {
+            return false
+        }
+        stack.update {
+            if (it.size > 1) it.dropLast(1) else it
+        }
+        return true
     }
 }
 
@@ -47,5 +65,31 @@ data class RegistrationConfig(
     @Composable
     override fun ScreenUI() {
         RegistrationScreen()
+    }
+}
+
+object CreditOfferOverviewConfig : Config {
+
+    @Composable
+    override fun ScreenUI() {
+        CreditOfferOverviewScreen()
+    }
+}
+
+object UniversityOverviewConfig : Config {
+
+    @Composable
+    override fun ScreenUI() {
+        UniversityOverviewScreen()
+    }
+}
+
+data class UniversityDetailsConfig(
+    val university: University,
+) : Config {
+
+    @Composable
+    override fun ScreenUI() {
+        UniversityDetailsScreen(university = university)
     }
 }

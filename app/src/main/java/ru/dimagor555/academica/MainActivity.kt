@@ -5,8 +5,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowCompat
+import ru.dimagor555.academica.login.AuthRepo
 import ru.dimagor555.academica.navigation.GlobalNavState
+import ru.dimagor555.academica.navigation.UniversityOverviewConfig
 import ru.dimagor555.academica.ui.theme.AcademicaTheme
 
 class MainActivity : ComponentActivity() {
@@ -15,11 +18,21 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
+            val authRepo = AuthRepo(LocalContext.current)
+            if (authRepo.isAuthorized) {
+                GlobalNavState.clearAndPush(UniversityOverviewConfig)
+            }
             AcademicaTheme(useDarkTheme = true) {
                 val stack by GlobalNavState.stack.collectAsState()
                 val currConfig = stack.last()
                 currConfig.ScreenUI()
             }
+        }
+    }
+
+    override fun onBackPressed() {
+        if (!GlobalNavState.pop()) {
+            super.onBackPressed()
         }
     }
 }

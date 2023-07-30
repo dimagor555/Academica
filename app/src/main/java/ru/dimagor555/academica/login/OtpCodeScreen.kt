@@ -1,5 +1,6 @@
 package ru.dimagor555.academica.login
 
+import android.content.Context
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
@@ -8,6 +9,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -24,6 +26,7 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import ru.dimagor555.academica.navigation.GlobalNavState
 import ru.dimagor555.academica.navigation.RegistrationConfig
+import ru.dimagor555.academica.navigation.UniversityOverviewConfig
 import ru.dimagor555.academica.net.client
 import ru.dimagor555.academica.ui.theme.AcademicaTheme
 import ru.tinkoff.decoro.MaskImpl
@@ -67,6 +70,7 @@ fun OtpCodeScreen(phone: String) {
                     fontWeight = FontWeight.Normal,
                 )
                 Spacer(modifier = Modifier.height(16.dp))
+                val context = LocalContext.current
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(),
                     value = code,
@@ -80,7 +84,7 @@ fun OtpCodeScreen(phone: String) {
                         }
                         code = it
                         if (isCodeCorrect(code)) {
-                            tryGoNext(phone = phone)
+                            tryGoNext(phone = phone, context = context)
                         }
                     },
                     placeholder = { Text(text = "Введите код из смс") },
@@ -128,16 +132,20 @@ private fun isCodeCorrect(code: String): Boolean =
     code == "5555"
 
 @OptIn(DelicateCoroutinesApi::class)
-private fun tryGoNext(phone: String) {
+private fun tryGoNext(phone: String, context: Context) {
     GlobalScope.launch {
         val userDto = runCatching {
             client.get("users/admin/telephone") {
                 contentType(ContentType.Application.Json)
-                setBody(PhoneDto(phone))
+                setBody(PhoneDto(phone.replace("+7", "8")))
             }.body<UserDto>()
         }.getOrNull()
+        val authRepo = AuthRepo(context)
+        authRepo.isAuthorized = userDto != null
         if (userDto == null) {
             GlobalNavState.push(RegistrationConfig(phone = phone))
+        } else {
+            GlobalNavState.clearAndPush(UniversityOverviewConfig)
         }
     }
 }
