@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.dimagor555.academica.navigation.CreditOfferOverviewConfig
 import ru.dimagor555.academica.navigation.GlobalNavState
+import ru.dimagor555.academica.navigation.ProfessionTestConfig
 import ru.dimagor555.academica.navigation.UniversityOverviewConfig
 import ru.dimagor555.academica.ui.theme.AcademicaTheme
 
@@ -47,7 +48,7 @@ fun MainScreen() {
                 )
                 ServiceCard(
                     serviceName = "Подобрать профессию",
-                    onClick = {},
+                    onClick = { GlobalNavState.push(ProfessionTestConfig) },
                 )
                 ServiceCard(
                     serviceName = "Подобрать кредит",

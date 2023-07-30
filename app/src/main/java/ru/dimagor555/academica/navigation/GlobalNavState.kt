@@ -9,6 +9,7 @@ import ru.dimagor555.academica.login.LoginScreen
 import ru.dimagor555.academica.login.OtpCodeScreen
 import ru.dimagor555.academica.login.RegistrationScreen
 import ru.dimagor555.academica.main.MainScreen
+import ru.dimagor555.academica.university.ProfessionTestScreen
 import ru.dimagor555.academica.university.University
 import ru.dimagor555.academica.university.UniversityDetailsScreen
 import ru.dimagor555.academica.university.UniversityOverviewScreen
@@ -112,4 +113,13 @@ data class AppliedCreditOffersConfig(
     override fun ScreenUI() {
         AppliedCreditOffersScreen(requiredAmountInRubles = requiredAmountInRubles)
     }
+}
+
+object ProfessionTestConfig : Config {
+
+    @Composable
+    override fun ScreenUI() {
+        ProfessionTestScreen()
+    }
+
 }
